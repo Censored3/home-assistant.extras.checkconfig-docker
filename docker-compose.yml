@@ -1,9 +1,15 @@
-version: '3'
+version: '3.7'
 
 services:
     homeassistant-checkconfig:
-        image: censored/hassio-addon-amd64-censored_check_config
-        working_dir: "//C/temp/ha-dev/check_config/"
+        image: homeassistant/amd64-addon-check_config
+        working_dir: "//c/temp/ha-dev/checkconfig-docker"
         volumes:
-          - "./options.json:/data/options.json"
-          - "../homeassistant:/config"
+        - type: bind
+          source: "./options.json"
+          target: "/data/options.json"
+          read_only: true
+        - type: bind
+          source: "../s13-hass"
+          target: "/config"
+          read_only: true
